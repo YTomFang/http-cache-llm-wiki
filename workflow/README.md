@@ -10,4 +10,4 @@
 | [大綱證據關卡](evidence-gate.json)／[內容檢查](content-check.json) | 兩項案例前提、引用與涉及的來源 |
 | [Chrome 驗收](browser-check.json)／[9 張截圖](../evidence/) | 四種視窗尺寸、互動測試、快取實驗與各張 PNG 的 SHA-256 |
 
-完整作業 ZIP 收錄 પાંચ份原始 HTML 快照，依擷取紀錄可重算 SHA-256。公開儲存庫提供 Wiki Markdown 及擷取、編譯和檢查腳本。從儲存庫或 ZIP 執行的指令見[重跑說明](replay.md)。
+完整作業 ZIP 收錄五份原始 HTML 快照，依擷取紀錄可重算 SHA-256。公開儲存庫提供 Wiki Markdown 及擷取、編譯和檢查腳本。從儲存庫或 ZIP 執行的指令見[重跑說明](replay.md)。
