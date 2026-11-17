@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTTP 快取入門 · LLM Wiki</title>
+<style>
+:root{color-scheme:dark;--bg:#0e1518;--surface:#152024;--raised:#1b2b30;--ink:#f4f4e8;--muted:#b5c5c4;--line:#35464b;--lime:#d7f787;--aqua:#91e5cd;--amber:#ffc087;--radius:22px;--mono:"IBM Plex Mono","Cascadia Mono",Consolas,monospace;--sans:"Inter","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55}
+[hidden]{display:none!important}
+a{color:var(--aqua);text-underline-offset:.25em}
+a:hover{color:var(--lime)}
+button,input,select{font:inherit}
+button,select{cursor:pointer}
+button:disabled{cursor:default}
+:focus-visible{outline:3px solid var(--lime);outline-offset:4px}
+code,pre,.mono{font-family:var(--mono)}
+code{overflow-wrap:anywhere}
+h1,h2,h3,p,pre{margin:0}
+.top{border-bottom:1px solid var(--line);background:var(--bg)}
+.top-inner{max-width:1320px;margin:auto;padding:15px clamp(18px,4vw,54px);display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:64px}
+.brand{display:inline-flex;align-items:center;gap:9px;color:var(--ink);text-decoration:none;font-size:.92rem;font-weight:750;letter-spacing:.04em}
+.brand-mark{color:var(--lime);font:700 .98rem var(--mono);white-space:nowrap}
+.nav{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.nav a{color:var(--muted);font-size:.86rem;text-decoration:none}
+.nav a:hover,.nav [aria-current="page"]{color:var(--lime)}
+.eyebrow{font-size:.8rem;letter-spacing:.14em;color:var(--lime);font-weight:750}
+.pill{border:1px solid var(--line);border-radius:100px;padding:4px 10px;color:var(--aqua);font-size:.76rem;text-decoration:none;display:inline-block;line-height:1.5}
+.pill:hover{border-color:var(--aqua);background:var(--raised)}
+@media(max-width:440px){.top-inner{gap:8px;padding:11px 16px;min-height:54px}.nav{gap:10px}.nav a{font-size:.77rem}.brand{font-size:.78rem}}
+
+:root{color-scheme:light;--paper:#f5f5ed;--paper-ink:#162821;--paper-muted:#4c6257;--paper-line:#cedad1;--green:#0d694e}
+body{background:var(--paper);color:var(--paper-ink)}
+.top{color:var(--ink);color-scheme:dark}
+.reference{max-width:1190px;margin:auto;padding:0 clamp(18px,4vw,50px) 50px}
+.mast{display:grid;grid-template-columns:1fr auto;align-items:end;gap:24px;margin:30px 0 24px;padding:clamp(26px,5vw,53px);background:#132421;color:var(--ink);border-radius:var(--radius)}
+.mast h1{font-size:clamp(2rem,5vw,4.2rem);letter-spacing:-.045em;line-height:1.15;margin:9px 0 12px}
+.mast p{max-width:40em;color:var(--muted)}
+.mast .pills{color:var(--lime);font-size:.88rem;display:grid;gap:7px}
+.mast .pills span{display:block;padding:6px 12px;border:1px solid #46635a;border-radius:100px;white-space:nowrap}
+.reference a:not(.mast a){color:var(--green)}
+.reference :focus-visible{outline-color:var(--green)}
+.reference h2{font-size:clamp(1.35rem,3vw,1.9rem);line-height:1.15}
+.reference h3{font-size:1.11rem}
+.split{display:grid;grid-template-columns:minmax(174px,220px) minmax(0,1fr);gap:24px;align-items:start}
+.side{position:sticky;top:12px;background:#e8eee7;border:1px solid var(--paper-line);border-radius:14px;padding:15px}
+.side h2{font-size:.86rem;margin:10px 0 6px}
+.side a{font-size:.84rem;display:block;padding:5px 1px;color:var(--green);text-decoration:none}
+.side a:hover{text-decoration:underline}
+.side a span{font:700 .74rem var(--mono);display:inline-block;margin-right:5px}
+.search{margin-bottom:13px}
+.search label{font-size:.82rem;font-weight:750}
+.search input{width:100%;padding:6px 8px;margin:3px 0 0;border:1px solid #9aafa4;border-radius:7px;color:var(--paper-ink);background:#fff}
+.search output{font-size:.76rem;color:var(--paper-muted)}
+.wiki-content>h2{margin:8px 0 11px}
+.wiki-card,.report-card{background:#fff;border:1px solid var(--paper-line);border-radius:13px;padding:clamp(17px,2.6vw,29px);margin-bottom:12px;min-width:0}
+.wiki-card:target,.claim:target,.source-section:target{outline:2px solid var(--green);outline-offset:3px}
+.wiki-card h3{font-size:clamp(1.15rem,2.7vw,1.65rem);margin-bottom:4px}
+.key{font:700 .78rem var(--mono);margin-right:7px;color:var(--green);vertical-align:middle}
+.wiki-card p,.report-card p,.report-card li{color:var(--paper-muted)}
+.claim,.source-section{margin-top:11px;padding:11px 13px;border-left:3px solid #b9d8c9;background:#eff4ef;border-radius:0 7px 7px 0;scroll-margin-top:16px}
+.claim p,.source-section p{margin-bottom:4px}
+.claim a,.source-section a,.related a{font-size:.8rem}
+.source-section h4{margin:0 0 4px;font-size:.92rem}
+.related{font-size:.83rem;margin-top:12px}
+.source-group{margin-top:30px!important}
+.origin{font-size:.82rem;margin:5px 0 0}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.action{display:block;background:white;border:1px solid var(--paper-line);padding:17px;border-radius:11px;text-decoration:none}
+.action strong{display:block;font-size:1.08rem}
+.action span{display:block;color:var(--paper-muted);font-size:.88rem;margin-top:4px}
+.action:hover{border-color:var(--green)}
+.report-card h2{margin-bottom:10px}
+.report-card p + p{margin-top:9px}
+.report-card h3{margin-top:17px;margin-bottom:4px}
+.report-card ul,.report-card ol{padding-left:1.35em}
+.report-card li + li{margin-top:6px}
+.report-title{background:#e8eee7;border-radius:7px;padding:8px 12px;margin-top:13px;font-size:.85rem}
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;list-style:none;padding:0!important;margin:15px 0}
+.flow li{margin:0!important;position:relative;padding:11px 12px;background:#edf3e9;border:1px solid var(--paper-line);border-radius:8px;font-size:.82rem}
+.flow li strong{display:block;color:var(--paper-ink);font-size:.95rem;margin-bottom:2px}
+.flow li.early{border-color:#528b70}
+.flow li.emphasis{background:#172e27;color:#becec5;border-color:#172e27}
+.flow li.emphasis strong{color:var(--lime)}
+.table-wrap{overflow:auto}
+table{border-collapse:collapse;width:100%;margin-top:9px;font-size:.9rem}
+th,td{text-align:left;vertical-align:top;border-bottom:1px solid var(--paper-line);padding:9px 8px}
+th{color:var(--paper-ink);font-size:.82rem}
+td{color:var(--paper-muted)}
+td:first-child{font-weight:700;color:var(--paper-ink)}
+.reflection{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.reflection > div{background:#edf3e9;border-radius:9px;padding:12px}
+.reflection h3{margin-top:0}
+.caption{font-size:.8rem;color:var(--paper-muted)}
+.report-footer{padding:0 5px;color:var(--paper-muted);font-size:.8rem}
+@media(max-width:800px){.split{grid-template-columns:1fr}.side{position:static}.side nav{display:flex;gap:0 12px;flex-wrap:wrap}.side nav:first-of-type{margin-bottom:8px}.side nav a{font-size:.8rem}.mast{margin-top:17px}.reflection{grid-template-columns:1fr}}
+@media(max-width:570px){.mast,.actions{grid-template-columns:1fr}.mast{gap:13px}.mast .pills{display:flex;flex-wrap:wrap;font-size:.75rem}.flow{grid-template-columns:1fr 1fr}td,th{padding:6px}.report-card table{min-width:490px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-inner">
+<a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">[HTTP]</span> 快取入門</a>
+<nav class="nav" aria-label="成果導覽"><a href="index.html">成果總覽</a><a href="wiki.html" aria-current="page">LLM Wiki</a><a href="slides.html">教學簡報</a></nav>
+</div></header>
+<main class="reference">
+<section class="mast"><div><div class="eyebrow">LLM WIKI</div><h1>瀏覽器 HTTP 快取</h1>
+<p>查找副本如何儲存、何時過期、如何驗證，以及如何在 Chrome 觀察。每則說法都連回原文段落。</p></div>
+<div class="pills"><span>5 個概念條目</span><span>5 篇來源摘要</span></div></section>
+<div class="split">
+<aside class="side" aria-label="Wiki 索引">
+<div class="search"><label for="wiki-search">搜尋 Wiki</label>
+<input type="search" id="wiki-search" placeholder="如 ETag 或 304">
+<output id="match-count" for="wiki-search" aria-live="polite"></output></div>
+<h2>概念索引</h2><nav aria-label="概念索引"><a href="#K01"><span>K01</span>HTTP 快取與副本</a><a href="#K02"><span>K02</span>新鮮度與 max-age</a><a href="#K03"><span>K03</span>條件式請求與 304</a><a href="#K04"><span>K04</span>Cache-Control 指令比較</a><a href="#K05"><span>K05</span>用 Chrome DevTools 檢查</a></nav>
+<h2>來源索引</h2><nav aria-label="來源索引"><a href="#S01"><span>S01</span>RFC 9111 · HTTP Caching</a><a href="#S02"><span>S02</span>RFC 9110 · HTTP Semantics</a><a href="#S03"><span>S03</span>HTTP caching</a><a href="#S04"><span>S04</span>HTTP conditional requests</a><a href="#S05"><span>S05</span>Network features reference</a></nav>
+</aside>
+<div class="wiki-content">
+<p id="no-result" hidden>找不到符合的條目。試試 304、max-age 或 DevTools。</p>
+<h2>概念條目</h2><article class="wiki-card" id="K01" data-tags="快取 副本 GET 200 HTTP 請求 回應 瀏覽器">
+<h3><span class="key">K01</span>HTTP 快取與副本</h3><p>快取存了什麼，能省下什麼？</p>
+<div class="claim" id="K01-copy"><p>瀏覽器會向伺服器請求圖片等資源。在示例中，首次成功的 GET 得到 200 OK 與圖片內容。HTTP 快取可以保留符合儲存條件的回應，供後續請求重用。</p><div><a href="#S01-section-3">S01 · §3 Storing Responses in Caches</a>　<a href="#S04-cache_update">S04 · Cache update</a></div></div><div class="claim" id="K01-saving"><p>本機快取直接重用副本時可省下網路往返和資源傳輸。驗證後重用仍有網路往返，可省下再次傳送內容。</p><div><a href="#S01-section-4.2">S01 · §4.2 Freshness</a>　<a href="#S04-cache_update">S04 · Cache update</a></div></div><p class="related">相關概念　<a href="#K02">新鮮度與 max-age</a>　<a href="#K04">Cache-Control 指令比較</a></p></article><article class="wiki-card" id="K02" data-tags="fresh stale 60 秒 max-age Age 重載 重新整理">
+<h3><span class="key">K02</span>新鮮度與 max-age</h3><p>副本在什麼條件下可直接重用？</p>
+<div class="claim" id="K02-fresh"><p>對符合重用條件的快取回應，current age 小於 freshness lifetime 時仍為 fresh，可直接使用。freshness lifetime 是回應仍有效的期限。</p><div><a href="#S01-section-4.2">S01 · §4.2 Freshness</a>　<a href="#S03-fresh_and_stale_based_on_age">S03 · Fresh and stale based on age</a></div></div><div class="claim" id="K02-example"><p>在沒有額外重用限制的示例中，回應給 max-age=60。若回應初始 age 是 0，正常再次請求時，age 30 秒仍是 fresh，age 60 秒起已 stale。</p><div><a href="#S01-section-4.2">S01 · §4.2 Freshness</a>　<a href="#S01-section-5.2.2.1">S01 · §5.2.2.1 max-age</a>　<a href="#S03-fresh_and_stale_based_on_age">S03 · Fresh and stale based on age</a></div></div><div class="claim" id="K02-reload"><p>瀏覽器重新整理可能主動驗證。用正常再次請求來說明直接重用，避免把重新整理或強制重新整理當成同一種情境。</p><div><a href="#S03-reload">S03 · Reload</a>　<a href="#S03-force_reload">S03 · Force reload</a></div></div><p class="related">相關概念　<a href="#K01">HTTP 快取與副本</a>　<a href="#K03">條件式請求與 304</a>　<a href="#K04">Cache-Control 指令比較</a></p></article><article class="wiki-card" id="K03" data-tags="ETag If-None-Match 驗證 304 200 過期 GET status">
+<h3><span class="key">K03</span>條件式請求與 304</h3><p>副本過期後，瀏覽器如何確認版本？</p>
+<div class="claim" id="K03-validator"><p>若儲存的回應有 ETag，瀏覽器可以在需要驗證時，把舊標記放在 GET 的 If-None-Match 請求標頭。沒有 ETag，就沒有這個舊標記可帶。</p><div><a href="#S01-section-4.3">S01 · §4.3 Validation</a>　<a href="#S02-section-8.8.3">S02 · §8.8.3 ETag</a>　<a href="#S02-section-13.1.2">S02 · §13.1.2 If-None-Match</a></div></div><div class="claim" id="K03-match"><p>在本例的條件式 GET 中，舊標記與現行版本相符，伺服器回 304 Not Modified。304 有標頭、無回應內容，瀏覽器可重用舊副本。</p><div><a href="#S02-section-15.4.5">S02 · §15.4.5 304 Not Modified</a>　<a href="#S04-cache_update">S04 · Cache update</a></div></div><div class="claim" id="K03-changed"><p>同一條件式 GET 中，若舊標記已不相符且請求成功，伺服器回 200 OK 和新版內容。</p><div><a href="#S02-section-13.1.2">S02 · §13.1.2 If-None-Match</a>　<a href="#S04-cache_update">S04 · Cache update</a></div></div><p class="related">相關概念　<a href="#K02">新鮮度與 max-age</a>　<a href="#K04">Cache-Control 指令比較</a>　<a href="#K05">用 Chrome DevTools 檢查</a></p></article><article class="wiki-card" id="K04" data-tags="Cache-Control max-age no-cache no-store 指令 儲存">
+<h3><span class="key">K04</span>Cache-Control 指令比較</h3><p>可重用、先驗證、不可儲存有何差別？</p>
+<div class="claim" id="K04-age"><p>max-age=60 指定 60 秒的新鮮期限。在其他條件也符合時，新鮮的回應可直接重用。</p><div><a href="#S01-section-4.2">S01 · §4.2 Freshness</a>　<a href="#S01-section-5.2.2.1">S01 · §5.2.2.1 max-age</a></div></div><div class="claim" id="K04-validate"><p>無參數的 no-cache 允許在其他儲存條件符合時保留副本，每次重用前都必須成功驗證。</p><div><a href="#S01-section-3">S01 · §3 Storing Responses in Caches</a>　<a href="#S01-section-5.2.2.4">S01 · §5.2.2.4 no-cache</a></div></div><div class="claim" id="K04-no-store"><p>在此課的單一指令情境下，no-store 禁止 HTTP 快取儲存這次回應。</p><div><a href="#S01-section-5.2.2.5">S01 · §5.2.2.5 no-store</a></div></div><p class="related">相關概念　<a href="#K01">HTTP 快取與副本</a>　<a href="#K02">新鮮度與 max-age</a>　<a href="#K03">條件式請求與 304</a></p></article><article class="wiki-card" id="K05" data-tags="Network Chrome DevTools Headers Preserve log Disable cache 開發者 工具 實作">
+<h3><span class="key">K05</span>用 Chrome DevTools 檢查</h3><p>怎麼在瀏覽器找出快取的線索？</p>
+<div class="claim" id="K05-settings"><p>先開 Chrome DevTools 的 Network，勾 Preserve log 保留跨頁面紀錄。觀察正常快取時，讓 Disable cache 維持未勾選。</p><div><a href="#S05-preserve-log">S05 · Save requests across page loads</a>　<a href="#S05-disable-cache">S05 · Emulate a first-time visitor by disabling the browser cache</a></div></div><div class="claim" id="K05-inspect"><p>選取同一個資源的請求，從 Headers 檢查狀態碼、Response Headers 的 Cache-Control／ETag，以及 Request Headers 是否帶 If-None-Match。</p><div><a href="#S05-headers">S05 · View HTTP headers</a>　<a href="#S02-section-13.1.2">S02 · §13.1.2 If-None-Match</a></div></div><p class="related">相關概念　<a href="#K02">新鮮度與 max-age</a>　<a href="#K03">條件式請求與 304</a></p></article>
+<h2 class="source-group">來源摘要</h2><article class="wiki-card" id="S01">
+<h3><span class="key">S01</span>RFC 9111 · HTTP Caching</h3>
+<p>規範 HTTP 快取的儲存、重用、期限及驗證。以它確認規則與適用條件。</p><p class="origin">IETF · RFC Editor · <time datetime="2026-11-17T15:24:52.155+08:00">2026-11-17 15:24</time>（臺灣時間）擷取 ·
+<a href="https://www.rfc-editor.org/rfc/rfc9111.html">原文 ↗</a></p>
+<div class="source-section" id="S01-section-3">
+<h4>§3 Storing Responses in Caches</h4><p>回應要符合儲存條件才可保留。儲存和之後是否能重用是兩個判斷。</p><a href="https://www.rfc-editor.org/rfc/rfc9111.html#section-3">查閱原文段落 ↗</a></div><div class="source-section" id="S01-section-4.2">
+<h4>§4.2 Freshness</h4><p>當 freshness lifetime 大於 current age，回應為 fresh。兩者相等時已達期限。</p><a href="https://www.rfc-editor.org/rfc/rfc9111.html#section-4.2">查閱原文段落 ↗</a></div><div class="source-section" id="S01-section-4.3">
+<h4>§4.3 Validation</h4><p>快取不能直接重用時，可利用條件式請求驗證已儲存的回應。</p><a href="https://www.rfc-editor.org/rfc/rfc9111.html#section-4.3">查閱原文段落 ↗</a></div><div class="source-section" id="S01-section-5.2.2.1">
+<h4>§5.2.2.1 max-age</h4><p>回應指令的秒數用來判斷 freshness lifetime。</p><a href="https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.1">查閱原文段落 ↗</a></div><div class="source-section" id="S01-section-5.2.2.4">
+<h4>§5.2.2.4 no-cache</h4><p>無參數的指令要求重用前向來源驗證並取得成功回應。</p><a href="https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.4">查閱原文段落 ↗</a></div><div class="source-section" id="S01-section-5.2.2.5">
+<h4>§5.2.2.5 no-store</h4><p>收到此回應指令的 HTTP 快取不得儲存這次回應。</p><a href="https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.5">查閱原文段落 ↗</a></div><p class="related">相關概念　<a href="#K01">HTTP 快取與副本</a>　<a href="#K02">新鮮度與 max-age</a>　<a href="#K03">條件式請求與 304</a>　<a href="#K04">Cache-Control 指令比較</a></p></article><article class="wiki-card" id="S02">
+<h3><span class="key">S02</span>RFC 9110 · HTTP Semantics</h3>
+<p>定義 HTTP 驗證標記、條件式請求及狀態碼。用於查對欄位的方向與 304 的內容。</p><p class="origin">IETF · RFC Editor · <time datetime="2026-11-17T15:24:52.663+08:00">2026-11-17 15:24</time>（臺灣時間）擷取 ·
+<a href="https://www.rfc-editor.org/rfc/rfc9110.html">原文 ↗</a></p>
+<div class="source-section" id="S02-section-8.8.3">
+<h4>§8.8.3 ETag</h4><p>ETag 是伺服器給資源回應的驗證標記。</p><a href="https://www.rfc-editor.org/rfc/rfc9110.html#section-8.8.3">查閱原文段落 ↗</a></div><div class="source-section" id="S02-section-13.1.2">
+<h4>§13.1.2 If-None-Match</h4><p>GET 帶有快取中的舊 ETag 時，伺服器比對目前版本。命中時回 304。</p><a href="https://www.rfc-editor.org/rfc/rfc9110.html#section-13.1.2">查閱原文段落 ↗</a></div><div class="source-section" id="S02-section-15.4.5">
+<h4>§15.4.5 304 Not Modified</h4><p>304 有回應標頭。資源內容由快取副本取得。</p><a href="https://www.rfc-editor.org/rfc/rfc9110.html#section-15.4.5">查閱原文段落 ↗</a></div><p class="related">相關概念　<a href="#K03">條件式請求與 304</a>　<a href="#K05">用 Chrome DevTools 檢查</a></p></article><article class="wiki-card" id="S03">
+<h3><span class="key">S03</span>HTTP caching</h3>
+<p>用實例解釋快取、期限和驗證，也提醒瀏覽器重新整理可能改變請求行為。</p><p class="origin">MDN Web Docs · <time datetime="2026-11-17T15:24:54.614+08:00">2026-11-17 15:24</time>（臺灣時間）擷取 ·
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching">原文 ↗</a></p>
+<div class="source-section" id="S03-fresh_and_stale_based_on_age">
+<h4>Fresh and stale based on age</h4><p>以已經過的時間解釋 fresh 和 stale。經過共享快取時，回應可能帶有 Age。</p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#fresh_and_stale_based_on_age">查閱原文段落 ↗</a></div><div class="source-section" id="S03-validation">
+<h4>Validation</h4><p>有驗證標記的舊副本仍可在驗證成功後使用。</p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#validation">查閱原文段落 ↗</a></div><div class="source-section" id="S03-reload">
+<h4>Reload</h4><p>按瀏覽器重新整理可能讓瀏覽器向伺服器要求驗證。</p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#reload">查閱原文段落 ↗</a></div><div class="source-section" id="S03-force_reload">
+<h4>Force reload</h4><p>強制重新整理可繞過現有快取。這和普通再次載入的情境不同。</p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#force_reload">查閱原文段落 ↗</a></div><p class="related">相關概念　<a href="#K02">新鮮度與 max-age</a></p></article><article class="wiki-card" id="S04">
+<h3><span class="key">S04</span>HTTP conditional requests</h3>
+<p>以一連串請求展示首次取得資源、使用副本、驗證舊版與下載新版。</p><p class="origin">MDN Web Docs · <time datetime="2026-11-17T15:24:55.810+08:00">2026-11-17 15:24</time>（臺灣時間）擷取 ·
+<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Conditional_requests">原文 ↗</a></p>
+<div class="source-section" id="S04-cache_update">
+<h4>Cache update</h4><p>首次成功取得完整資源通常是 200。舊副本的標記相符則回 304，標記不符且請求成功則回 200 與新內容。</p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Conditional_requests#cache_update">查閱原文段落 ↗</a></div><p class="related">相關概念　<a href="#K01">HTTP 快取與副本</a>　<a href="#K03">條件式請求與 304</a></p></article><article class="wiki-card" id="S05">
+<h3><span class="key">S05</span>Network features reference</h3>
+<p>Chrome 開發者工具的操作參考。用它定位快取開關、網路請求紀錄及 HTTP 標頭。</p><p class="origin">Chrome for Developers · <time datetime="2026-11-17T15:24:57.010+08:00">2026-11-17 15:24</time>（臺灣時間）擷取 ·
+<a href="https://developer.chrome.com/docs/devtools/network/reference/">原文 ↗</a></p>
+<div class="source-section" id="S05-preserve-log">
+<h4>Save requests across page loads</h4><p>打開 Preserve log，切換頁面時保留請求紀錄。</p><a href="https://developer.chrome.com/docs/devtools/network/reference/#preserve-log">查閱原文段落 ↗</a></div><div class="source-section" id="S05-disable-cache">
+<h4>Emulate a first-time visitor by disabling the browser cache</h4><p>做快取觀察時保留正常快取行為，確認沒有勾選 Disable cache。</p><a href="https://developer.chrome.com/docs/devtools/network/reference/#disable-cache">查閱原文段落 ↗</a></div><div class="source-section" id="S05-headers">
+<h4>View HTTP headers</h4><p>選取請求，在 Headers 查看狀態、Response Headers 與 Request Headers。</p><a href="https://developer.chrome.com/docs/devtools/network/reference/#headers">查閱原文段落 ↗</a></div><p class="related">相關概念　<a href="#K05">用 Chrome DevTools 檢查</a></p></article>
+</div></div>
+</main>
+<script>
+const search = document.querySelector("#wiki-search");
+const output = document.querySelector("#match-count");
+const entries = Array.from(document.querySelectorAll(".wiki-card"));
+const keys = new Map(entries.map(entry => [
+  entry.id, (entry.textContent + " " + (entry.dataset.tags || "")).toLowerCase()
+]));
+
+function filterEntries() {
+  const terms = search.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
+  let visible = 0;
+  for (const entry of entries) {
+    entry.hidden = !terms.every(term => keys.get(entry.id).includes(term));
+    if (!entry.hidden) visible++;
+  }
+  output.textContent = "顯示 " + visible + " / " + entries.length + " 個條目";
+  document.querySelector("#no-result").hidden = visible !== 0;
+}
+
+search.addEventListener("input", filterEntries);
+document.addEventListener("click", event => {
+  const link = event.target.closest("a[href^='#']");
+  if (!link || !search.value) return;
+  const target = document.getElementById(link.hash.slice(1));
+  if (target?.closest(".wiki-card")?.hidden) {
+    search.value = "";
+    filterEntries();
+  }
+});
+filterEntries();
+</script>
+</body>
+</html>

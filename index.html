@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTTP 快取入門 · 作業成果</title>
+<style>
+:root{color-scheme:dark;--bg:#0e1518;--surface:#152024;--raised:#1b2b30;--ink:#f4f4e8;--muted:#b5c5c4;--line:#35464b;--lime:#d7f787;--aqua:#91e5cd;--amber:#ffc087;--radius:22px;--mono:"IBM Plex Mono","Cascadia Mono",Consolas,monospace;--sans:"Inter","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55}
+[hidden]{display:none!important}
+a{color:var(--aqua);text-underline-offset:.25em}
+a:hover{color:var(--lime)}
+button,input,select{font:inherit}
+button,select{cursor:pointer}
+button:disabled{cursor:default}
+:focus-visible{outline:3px solid var(--lime);outline-offset:4px}
+code,pre,.mono{font-family:var(--mono)}
+code{overflow-wrap:anywhere}
+h1,h2,h3,p,pre{margin:0}
+.top{border-bottom:1px solid var(--line);background:var(--bg)}
+.top-inner{max-width:1320px;margin:auto;padding:15px clamp(18px,4vw,54px);display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:64px}
+.brand{display:inline-flex;align-items:center;gap:9px;color:var(--ink);text-decoration:none;font-size:.92rem;font-weight:750;letter-spacing:.04em}
+.brand-mark{color:var(--lime);font:700 .98rem var(--mono);white-space:nowrap}
+.nav{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.nav a{color:var(--muted);font-size:.86rem;text-decoration:none}
+.nav a:hover,.nav [aria-current="page"]{color:var(--lime)}
+.eyebrow{font-size:.8rem;letter-spacing:.14em;color:var(--lime);font-weight:750}
+.pill{border:1px solid var(--line);border-radius:100px;padding:4px 10px;color:var(--aqua);font-size:.76rem;text-decoration:none;display:inline-block;line-height:1.5}
+.pill:hover{border-color:var(--aqua);background:var(--raised)}
+@media(max-width:440px){.top-inner{gap:8px;padding:11px 16px;min-height:54px}.nav{gap:10px}.nav a{font-size:.77rem}.brand{font-size:.78rem}}
+
+:root{color-scheme:light;--paper:#f5f5ed;--paper-ink:#162821;--paper-muted:#4c6257;--paper-line:#cedad1;--green:#0d694e}
+body{background:var(--paper);color:var(--paper-ink)}
+.top{color:var(--ink);color-scheme:dark}
+.reference{max-width:1190px;margin:auto;padding:0 clamp(18px,4vw,50px) 50px}
+.mast{display:grid;grid-template-columns:1fr auto;align-items:end;gap:24px;margin:30px 0 24px;padding:clamp(26px,5vw,53px);background:#132421;color:var(--ink);border-radius:var(--radius)}
+.mast h1{font-size:clamp(2rem,5vw,4.2rem);letter-spacing:-.045em;line-height:1.15;margin:9px 0 12px}
+.mast p{max-width:40em;color:var(--muted)}
+.mast .pills{color:var(--lime);font-size:.88rem;display:grid;gap:7px}
+.mast .pills span{display:block;padding:6px 12px;border:1px solid #46635a;border-radius:100px;white-space:nowrap}
+.reference a:not(.mast a){color:var(--green)}
+.reference :focus-visible{outline-color:var(--green)}
+.reference h2{font-size:clamp(1.35rem,3vw,1.9rem);line-height:1.15}
+.reference h3{font-size:1.11rem}
+.split{display:grid;grid-template-columns:minmax(174px,220px) minmax(0,1fr);gap:24px;align-items:start}
+.side{position:sticky;top:12px;background:#e8eee7;border:1px solid var(--paper-line);border-radius:14px;padding:15px}
+.side h2{font-size:.86rem;margin:10px 0 6px}
+.side a{font-size:.84rem;display:block;padding:5px 1px;color:var(--green);text-decoration:none}
+.side a:hover{text-decoration:underline}
+.side a span{font:700 .74rem var(--mono);display:inline-block;margin-right:5px}
+.search{margin-bottom:13px}
+.search label{font-size:.82rem;font-weight:750}
+.search input{width:100%;padding:6px 8px;margin:3px 0 0;border:1px solid #9aafa4;border-radius:7px;color:var(--paper-ink);background:#fff}
+.search output{font-size:.76rem;color:var(--paper-muted)}
+.wiki-content>h2{margin:8px 0 11px}
+.wiki-card,.report-card{background:#fff;border:1px solid var(--paper-line);border-radius:13px;padding:clamp(17px,2.6vw,29px);margin-bottom:12px;min-width:0}
+.wiki-card:target,.claim:target,.source-section:target{outline:2px solid var(--green);outline-offset:3px}
+.wiki-card h3{font-size:clamp(1.15rem,2.7vw,1.65rem);margin-bottom:4px}
+.key{font:700 .78rem var(--mono);margin-right:7px;color:var(--green);vertical-align:middle}
+.wiki-card p,.report-card p,.report-card li{color:var(--paper-muted)}
+.claim,.source-section{margin-top:11px;padding:11px 13px;border-left:3px solid #b9d8c9;background:#eff4ef;border-radius:0 7px 7px 0;scroll-margin-top:16px}
+.claim p,.source-section p{margin-bottom:4px}
+.claim a,.source-section a,.related a{font-size:.8rem}
+.source-section h4{margin:0 0 4px;font-size:.92rem}
+.related{font-size:.83rem;margin-top:12px}
+.source-group{margin-top:30px!important}
+.origin{font-size:.82rem;margin:5px 0 0}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.action{display:block;background:white;border:1px solid var(--paper-line);padding:17px;border-radius:11px;text-decoration:none}
+.action strong{display:block;font-size:1.08rem}
+.action span{display:block;color:var(--paper-muted);font-size:.88rem;margin-top:4px}
+.action:hover{border-color:var(--green)}
+.report-card h2{margin-bottom:10px}
+.report-card p + p{margin-top:9px}
+.report-card h3{margin-top:17px;margin-bottom:4px}
+.report-card ul,.report-card ol{padding-left:1.35em}
+.report-card li + li{margin-top:6px}
+.report-title{background:#e8eee7;border-radius:7px;padding:8px 12px;margin-top:13px;font-size:.85rem}
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;list-style:none;padding:0!important;margin:15px 0}
+.flow li{margin:0!important;position:relative;padding:11px 12px;background:#edf3e9;border:1px solid var(--paper-line);border-radius:8px;font-size:.82rem}
+.flow li strong{display:block;color:var(--paper-ink);font-size:.95rem;margin-bottom:2px}
+.flow li.early{border-color:#528b70}
+.flow li.emphasis{background:#172e27;color:#becec5;border-color:#172e27}
+.flow li.emphasis strong{color:var(--lime)}
+.table-wrap{overflow:auto}
+table{border-collapse:collapse;width:100%;margin-top:9px;font-size:.9rem}
+th,td{text-align:left;vertical-align:top;border-bottom:1px solid var(--paper-line);padding:9px 8px}
+th{color:var(--paper-ink);font-size:.82rem}
+td{color:var(--paper-muted)}
+td:first-child{font-weight:700;color:var(--paper-ink)}
+.reflection{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.reflection > div{background:#edf3e9;border-radius:9px;padding:12px}
+.reflection h3{margin-top:0}
+.caption{font-size:.8rem;color:var(--paper-muted)}
+.report-footer{padding:0 5px;color:var(--paper-muted);font-size:.8rem}
+@media(max-width:800px){.split{grid-template-columns:1fr}.side{position:static}.side nav{display:flex;gap:0 12px;flex-wrap:wrap}.side nav:first-of-type{margin-bottom:8px}.side nav a{font-size:.8rem}.mast{margin-top:17px}.reflection{grid-template-columns:1fr}}
+@media(max-width:570px){.mast,.actions{grid-template-columns:1fr}.mast{gap:13px}.mast .pills{display:flex;flex-wrap:wrap;font-size:.75rem}.flow{grid-template-columns:1fr 1fr}td,th{padding:6px}.report-card table{min-width:490px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-inner">
+<a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">[HTTP]</span> 快取入門</a>
+<nav class="nav" aria-label="成果導覽"><a href="index.html" aria-current="page">成果總覽</a><a href="wiki.html">LLM Wiki</a><a href="slides.html">教學簡報</a></nav>
+</div></header>
+<main class="reference">
+<section class="mast"><div><div class="eyebrow">LLM WIKI × 教學簡報</div>
+<h1>HTTP 快取入門</h1>
+<p>以社團網站的一張海報為例，學習瀏覽器何時能直接用舊副本、何時要確認版本、何時會下載新版。</p></div>
+<div class="pills"><span>5 篇資料已納入 Wiki</span><span>8 頁互動式 HTML 簡報</span></div></section>
+
+<div class="actions">
+<a class="action" href="wiki.html"><strong>瀏覽 LLM Wiki →</strong><span>從概念條目查到原文段落</span></a>
+<a class="action" href="slides.html"><strong>開啟教學簡報 →</strong><span>可用方向鍵、頁碼選單與翻頁按鈕</span></a>
+</div>
+
+<section class="report-card" id="scope">
+<h2>建 Wiki 前的設計</h2>
+<p>先提出「HTTP 快取入門」、初學者讀者與海報情境，並請使用者選擇是否採用。初版依自由選題授權執行，之後收到使用者回覆「採用這個範圍」。本次在確認後重新擷取五篇來源、更新 Wiki、檢查並產生 HTML。實際對話節錄與執行順序收在 ZIP 內的 <code>workflow/scope.md</code>。</p>
+<p>五篇資料逐篇擷取，再彙整成五個互相連結的概念條目。遇到近似說法時先分辨情境，例如一般再次請求和手動重新整理可能走不同路徑。儲存規則以 RFC 為基準，操作以 Chrome 官方文件為基準。</p>
+<p>ZIP 中的 <code>raw/</code> 保存實際擷取時間、最終 URL、回應標頭及 SHA-256，<code>raw/captures/</code> 保存五份完整 HTML 回應。來源及概念頁在 <code>wiki/</code>，維護方式在 <code>AGENTS.md</code>。依 Karpathy 的來源、Wiki 與維護規則三層架構整理。<a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f">Karpathy · LLM Wiki</a></p>
+</section>
+
+<section class="report-card" id="graph">
+<h2>Graph 與退回路徑</h2>
+<p>由「製作給初學者的 HTTP 快取簡報」觸發。每次先讀 Wiki，為大綱中的教學問題配對概念和證據，再撰寫、檢查並渲染。</p>
+<ol class="flow" aria-label="由左而右，依序進行">
+<li><strong>01 擷取資料</strong>讀原文，保存定位與擷取指紋</li>
+<li><strong>02 整理 Wiki</strong>寫來源摘要、概念、索引及日誌</li>
+<li><strong>03 查詢 Wiki</strong>用教學問題找概念、選證據</li>
+<li class="early"><strong>04 檢查大綱條件</strong>逐頁確認來源與示例前提</li>
+<li><strong>05 產生逐頁稿</strong>用入選證據寫內容、例子和練習</li>
+<li class="early"><strong>06 檢查內容</strong>核對用詞、條件和逐頁引用</li>
+<li><strong>07 渲染 HTML</strong>讀核對後的稿件、產生頁面</li>
+<li class="emphasis"><strong>08 瀏覽驗收</strong>測試畫面、翻頁、測驗與連結</li>
+</ol>
+<div class="table-wrap">
+<table>
+<thead><tr><th scope="col">何時重跑</th><th scope="col">退回哪裡</th><th scope="col">修正原因</th></tr></thead>
+<tbody>
+<tr><td>每納入一篇來源</td><td>擷取 → Wiki → 檢查段落定位</td><td>來源有自己的擷取紀錄和摘要，概念可以合併引用多篇資料。</td></tr>
+<tr><td>大綱缺直接證據</td><td>回查詢，必要時回擷取</td><td>在起稿前確認說法有足夠的 Wiki 支持。</td></tr>
+<tr><td>條件或說法不符</td><td>回證據條件或只修該頁稿，重查內容</td><td>讓錯誤在渲染前停止，減少重排整份投影片。</td></tr>
+<tr><td>連結、互動或版面失敗</td><td>回渲染或局部調整逐頁稿，再跑瀏覽驗收</td><td>只修發生問題的頁面或互動。</td></tr>
+</tbody>
+</table>
+</div>
+<p>本次由 Codex 依 Graph 調度各節點，腳本檢查引用、已知條件與瀏覽行為。預設每個退回節點最多修兩輪。若仍缺支持，就暫停該說法並列出缺口。內容與瀏覽檢查都通過後交付。</p>
+</section>
+
+<section class="report-card" id="trace">
+<h2>一次實跑的檢查紀錄</h2>
+<p class="caption">此次重跑最後一篇來源的收件時間為 <time datetime="2026-11-17T15:24:57.010+08:00">2026-11-17T15:24:57.010+08:00</time>（臺灣時間），即 <time datetime="2026-11-17T07:24:57.010+00:00">2026-11-17T07:24:57.010+00:00</time>（UTC）。</p>
+<p>初版 Chrome 紀錄的臺灣時間是 11 月 17 日 02:59:53，換算 UTC 是 11 月 16 日 18:59:53。初版來源日期曾由程式固定填入，本次改由程式在收到每個 HTTP 回應時記時，並重算完整快照的指紋。Chrome 也已重跑並使用此次實測紀錄。</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th scope="col">節點</th><th scope="col">實際檢查</th><th scope="col">處理及結果</th></tr></thead>
+<tbody>
+<tr><td>擷取與 ingest</td><td>5 篇原文均取得 HTTP 200。核對 17 個段落定位與 5 則原文節錄。</td><td>建立 5 個來源摘要、5 個概念條目、13 則證據。擷取指紋保存在 <code>workflow/ingest.json</code>。</td></tr>
+<tr><td>查詢覆蓋</td><td>第 2 頁的初版查詢找不到預選的 K03。該頁要說的是「首次取得」，K03 的 200 主張描述的是驗證後取得新版。</td><td>在 <a href="wiki.html#K01-copy">K01 快取副本</a>補入 S04 支持的首次 GET 情境。第 2 頁的查詢改選 K01。</td></tr>
+<tr><td>逐頁稿 v0</td><td>28 個逐頁引用定位有效。來源對照抓到 2 個條件問題。</td><td>第 3 頁把「重新整理」改成「正常再次請求」。第 4 頁補上「若過期副本附有 ETag」。</td></tr>
+<tr><td>證據關卡與逐頁稿 v1</td><td>用 <a href="wiki.html#K02-reload">K02 重新整理</a>和 <a href="wiki.html#K03-validator">K03 驗證標記</a>檢查 2 條必要前提。逐頁檢查只改第 3、4 頁。</td><td>8 頁都有 Wiki 引用，共 28 個引用，涵蓋全部 5 篇來源。兩個已知條件問題均已通過重查。</td></tr>
+<tr><td>渲染與版面</td><td>首次在 1280 × 720 測試時，第 6 頁整個頁面高 727 像素，需捲動 7 像素。</td><td>退回渲染，縮短較矮桌面上的內距及步驟間距。8 頁在四種桌面與手機視窗尺寸均通過測試。</td></tr>
+<tr><td>Chrome 互動</td><td>在 Windows 主機用已安裝的 Chrome 測試 HTML 連結及定位、翻頁、兩題測驗和 Wiki 搜尋。</td><td><code>workflow/browser-check.json</code> 保存時間、Chrome 版本、畫面尺寸、HTML 與截圖指紋。手機可縱向閱讀，各頁無水平溢出。</td></tr>
+</tbody>
+</table>
+</div>
+<p>引用檢查確認連結、涵蓋率及這次遇到的條件問題。語義由 Codex 逐頁對照 Wiki 與來源；腳本中的兩條規則只涵蓋本次記錄的條件。</p>
+<h3>海報情境的 HTTP 實測</h3>
+<p>用本機測試伺服器與 Chrome 載入同一張圖片，為縮短測試時間設定 <code>max-age=2</code>。伺服器記錄到首次 <code>200</code> 並送出 69 位元組圖片，期限內再次載入時沒有收到圖片請求。過期後帶上 <code>If-None-Match: "poster-v1"</code>，版本相同時回 <code>304</code>，傳送的圖片內容為 0 位元組。換版後回 <code>200</code>、新 ETag 與新版圖片。</p>
+<h3>Chrome 驗收截圖</h3>
+<ul>
+<li><a href="evidence/deck-1440-validate.png">桌面 1440 × 900｜條件式請求投影片</a></li>
+<li><a href="evidence/deck-390-validate.png">手機 390 × 844｜同頁響應式版面</a></li>
+<li><a href="evidence/deck-1440-quiz-feedback.png">互動測驗｜兩題答對後的回饋</a></li>
+<li><a href="evidence/wiki-origin-link.png">Wiki｜從概念跳到 Chrome 原文段落的定位</a></li>
+</ul>
+<h3>如何追到原文</h3>
+<ul>
+<li><a href="slides.html#fresh">第 3 頁｜副本有效期限</a> → <a href="wiki.html#K02-example">K02 的 60 秒示例</a> → <a href="wiki.html#S01-section-4.2">S01 · RFC 9111 §4.2</a></li>
+<li><a href="slides.html#validate">第 4 頁｜版本驗證</a> → <a href="wiki.html#K03-match">K03 的 304</a> → <a href="wiki.html#S02-section-15.4.5">S02 · RFC 9110 §15.4.5</a></li>
+<li><a href="slides.html#lab">第 6 頁｜Chrome 實作</a> → <a href="wiki.html#K05-inspect">K05 的 Headers</a> → <a href="wiki.html#S05-headers">S05 · Chrome 官方說明</a></li>
+</ul>
+<p>ZIP 內的 <code>workflow/</code> 保存查詢結果、兩版逐頁稿、檢查腳本與 JSON 紀錄。</p>
+</section>
+
+<section class="report-card" id="reflection">
+<h2>反思</h2>
+<div class="reflection">
+<div><h3>哪一節最容易出錯？</h3><p>這次以逐頁稿最多，共兩處。寫成簡短教學句時，手動重新整理和 ETag 存在與否這兩個條件被省略或混用。讀者照著操作時，可能看到和預期不同的請求。</p></div>
+<div><h3>檢查移到哪裡？</h3><p>從逐頁稿的事後對照，前移到「查詢 Wiki」之後、「產生逐頁稿」之前的大綱證據關卡。先從條目抄錄前提給撰稿節點，再用同一批證據驗稿。</p></div>
+<div><h3>Graph 有什麼變更？</h3><p>在查詢與逐頁稿之間新增「檢查大綱條件」。前提不清就回查概念頁，有可用證據才重寫受影響的頁面。本次只需更動第 3、4 頁的稿件。</p></div>
+</div>
+</section>
+
+<section class="report-card">
+<h2>繳交方式</h2>
+<p>線上版可從頂端選單開啟 Wiki 與教學簡報。下載 ZIP 後解壓並開啟 <code>index.html</code>，可離線瀏覽與查核執行紀錄。查閱原文連結需要網路。</p>
+<p class="report-title">繳交標題　［學校］ ［學號］ ［系級］ ［姓名］ HTTP 快取入門</p>
+</section>
+<p class="report-footer">課堂方法參考《把你的工作拆成 AI 能做的流程》第 28–35、41–47、52 頁。</p>
+</main>
+
+
+</body>
+</html>
