@@ -1,0 +1,54 @@
+{
+  "policy": "Both fresh HTTPS Date references must be within five seconds of the local UTC clock.",
+  "prior_timestamps": "The earlier publication reported future local timestamps. Those values were withdrawn. This record measures the corrected rerun.",
+  "runs": {
+    "before": {
+      "checked_utc": "2026-11-17T03:20:48.114+00:00",
+      "checked_taipei": "2026-11-17T11:20:48.114+08:00",
+      "references": [
+        {
+          "endpoint": "https://api.github.com/rate_limit",
+          "remote_utc": "2026-11-17T03:20:47+00:00",
+          "local_start_utc": "2026-11-17T03:20:47.909+00:00",
+          "local_end_utc": "2026-11-17T03:20:48.059+00:00",
+          "round_trip_seconds": 0.15,
+          "local_minus_remote_seconds": 0.985,
+          "response_age_seconds": 0
+        },
+        {
+          "endpoint": "https://www.cloudflare.com/cdn-cgi/trace",
+          "remote_utc": "2026-11-17T03:20:47+00:00",
+          "local_start_utc": "2026-11-17T03:20:48.059+00:00",
+          "local_end_utc": "2026-11-17T03:20:48.114+00:00",
+          "round_trip_seconds": 0.054,
+          "local_minus_remote_seconds": 1.087,
+          "response_age_seconds": 0
+        }
+      ]
+    },
+    "after": {
+      "checked_utc": "2026-11-17T03:21:44.174+00:00",
+      "checked_taipei": "2026-11-17T11:21:44.174+08:00",
+      "references": [
+        {
+          "endpoint": "https://api.github.com/rate_limit",
+          "remote_utc": "2026-11-17T03:21:43+00:00",
+          "local_start_utc": "2026-11-17T03:21:43.969+00:00",
+          "local_end_utc": "2026-11-17T03:21:44.118+00:00",
+          "round_trip_seconds": 0.149,
+          "local_minus_remote_seconds": 1.044,
+          "response_age_seconds": 0
+        },
+        {
+          "endpoint": "https://www.cloudflare.com/cdn-cgi/trace",
+          "remote_utc": "2026-11-17T03:21:43+00:00",
+          "local_start_utc": "2026-11-17T03:21:44.118+00:00",
+          "local_end_utc": "2026-11-17T03:21:44.174+00:00",
+          "round_trip_seconds": 0.055,
+          "local_minus_remote_seconds": 1.147,
+          "response_age_seconds": 0
+        }
+      ]
+    }
+  }
+}

@@ -130,7 +130,7 @@ td:first-child{font-weight:700;color:var(--paper-ink)}
 <div class="claim" id="K05-settings"><p>先開 Chrome DevTools 的 Network，勾 Preserve log 保留跨頁面紀錄。觀察正常快取時，讓 Disable cache 維持未勾選。</p><div><a href="#S05-preserve-log">S05 · Save requests across page loads</a>　<a href="#S05-disable-cache">S05 · Emulate a first-time visitor by disabling the browser cache</a></div></div><div class="claim" id="K05-inspect"><p>選取同一個資源的請求，從 Headers 檢查狀態碼、Response Headers 的 Cache-Control／ETag，以及 Request Headers 是否帶 If-None-Match。</p><div><a href="#S05-headers">S05 · View HTTP headers</a>　<a href="#S02-section-13.1.2">S02 · §13.1.2 If-None-Match</a></div></div><p class="related">相關概念　<a href="#K02">新鮮度與 max-age</a>　<a href="#K03">條件式請求與 304</a></p></article>
 <h2 class="source-group">來源摘要</h2><article class="wiki-card" id="S01">
 <h3><span class="key">S01</span>RFC 9111 · HTTP Caching</h3>
-<p>規範 HTTP 快取的儲存、重用、期限及驗證。以它確認規則與適用條件。</p><p class="origin">IETF · RFC Editor · <time datetime="2026-11-17T15:24:52.155+08:00">2026-11-17 15:24</time>（臺灣時間）擷取 ·
+<p>規範 HTTP 快取的儲存、重用、期限及驗證。以它確認規則與適用條件。</p><p class="origin">IETF · RFC Editor · <time datetime="2026-11-17T11:20:48.867+08:00">2026-11-17 11:20</time>（臺灣時間）擷取 ·
 <a href="https://www.rfc-editor.org/rfc/rfc9111.html">原文 ↗</a></p>
 <div class="source-section" id="S01-section-3">
 <h4>§3 Storing Responses in Caches</h4><p>回應要符合儲存條件才可保留。儲存和之後是否能重用是兩個判斷。</p><a href="https://www.rfc-editor.org/rfc/rfc9111.html#section-3">查閱原文段落 ↗</a></div><div class="source-section" id="S01-section-4.2">
@@ -140,14 +140,14 @@ td:first-child{font-weight:700;color:var(--paper-ink)}
 <h4>§5.2.2.4 no-cache</h4><p>無參數的指令要求重用前向來源驗證並取得成功回應。</p><a href="https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.4">查閱原文段落 ↗</a></div><div class="source-section" id="S01-section-5.2.2.5">
 <h4>§5.2.2.5 no-store</h4><p>收到此回應指令的 HTTP 快取不得儲存這次回應。</p><a href="https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.5">查閱原文段落 ↗</a></div><p class="related">相關概念　<a href="#K01">HTTP 快取與副本</a>　<a href="#K02">新鮮度與 max-age</a>　<a href="#K03">條件式請求與 304</a>　<a href="#K04">Cache-Control 指令比較</a></p></article><article class="wiki-card" id="S02">
 <h3><span class="key">S02</span>RFC 9110 · HTTP Semantics</h3>
-<p>定義 HTTP 驗證標記、條件式請求及狀態碼。用於查對欄位的方向與 304 的內容。</p><p class="origin">IETF · RFC Editor · <time datetime="2026-11-17T15:24:52.663+08:00">2026-11-17 15:24</time>（臺灣時間）擷取 ·
+<p>定義 HTTP 驗證標記、條件式請求及狀態碼。用於查對欄位的方向與 304 的內容。</p><p class="origin">IETF · RFC Editor · <time datetime="2026-11-17T11:20:49.312+08:00">2026-11-17 11:20</time>（臺灣時間）擷取 ·
 <a href="https://www.rfc-editor.org/rfc/rfc9110.html">原文 ↗</a></p>
 <div class="source-section" id="S02-section-8.8.3">
 <h4>§8.8.3 ETag</h4><p>ETag 是伺服器給資源回應的驗證標記。</p><a href="https://www.rfc-editor.org/rfc/rfc9110.html#section-8.8.3">查閱原文段落 ↗</a></div><div class="source-section" id="S02-section-13.1.2">
 <h4>§13.1.2 If-None-Match</h4><p>GET 帶有快取中的舊 ETag 時，伺服器比對目前版本。命中時回 304。</p><a href="https://www.rfc-editor.org/rfc/rfc9110.html#section-13.1.2">查閱原文段落 ↗</a></div><div class="source-section" id="S02-section-15.4.5">
 <h4>§15.4.5 304 Not Modified</h4><p>304 有回應標頭。資源內容由快取副本取得。</p><a href="https://www.rfc-editor.org/rfc/rfc9110.html#section-15.4.5">查閱原文段落 ↗</a></div><p class="related">相關概念　<a href="#K03">條件式請求與 304</a>　<a href="#K05">用 Chrome DevTools 檢查</a></p></article><article class="wiki-card" id="S03">
 <h3><span class="key">S03</span>HTTP caching</h3>
-<p>用實例解釋快取、期限和驗證，也提醒瀏覽器重新整理可能改變請求行為。</p><p class="origin">MDN Web Docs · <time datetime="2026-11-17T15:24:54.614+08:00">2026-11-17 15:24</time>（臺灣時間）擷取 ·
+<p>用實例解釋快取、期限和驗證，也提醒瀏覽器重新整理可能改變請求行為。</p><p class="origin">MDN Web Docs · <time datetime="2026-11-17T11:20:50.037+08:00">2026-11-17 11:20</time>（臺灣時間）擷取 ·
 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching">原文 ↗</a></p>
 <div class="source-section" id="S03-fresh_and_stale_based_on_age">
 <h4>Fresh and stale based on age</h4><p>以已經過的時間解釋 fresh 和 stale。經過共享快取時，回應可能帶有 Age。</p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#fresh_and_stale_based_on_age">查閱原文段落 ↗</a></div><div class="source-section" id="S03-validation">
@@ -155,12 +155,12 @@ td:first-child{font-weight:700;color:var(--paper-ink)}
 <h4>Reload</h4><p>按瀏覽器重新整理可能讓瀏覽器向伺服器要求驗證。</p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#reload">查閱原文段落 ↗</a></div><div class="source-section" id="S03-force_reload">
 <h4>Force reload</h4><p>強制重新整理可繞過現有快取。這和普通再次載入的情境不同。</p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#force_reload">查閱原文段落 ↗</a></div><p class="related">相關概念　<a href="#K02">新鮮度與 max-age</a></p></article><article class="wiki-card" id="S04">
 <h3><span class="key">S04</span>HTTP conditional requests</h3>
-<p>以一連串請求展示首次取得資源、使用副本、驗證舊版與下載新版。</p><p class="origin">MDN Web Docs · <time datetime="2026-11-17T15:24:55.810+08:00">2026-11-17 15:24</time>（臺灣時間）擷取 ·
+<p>以一連串請求展示首次取得資源、使用副本、驗證舊版與下載新版。</p><p class="origin">MDN Web Docs · <time datetime="2026-11-17T11:20:51.264+08:00">2026-11-17 11:20</time>（臺灣時間）擷取 ·
 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Conditional_requests">原文 ↗</a></p>
 <div class="source-section" id="S04-cache_update">
 <h4>Cache update</h4><p>首次成功取得完整資源通常是 200。舊副本的標記相符則回 304，標記不符且請求成功則回 200 與新內容。</p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Conditional_requests#cache_update">查閱原文段落 ↗</a></div><p class="related">相關概念　<a href="#K01">HTTP 快取與副本</a>　<a href="#K03">條件式請求與 304</a></p></article><article class="wiki-card" id="S05">
 <h3><span class="key">S05</span>Network features reference</h3>
-<p>Chrome 開發者工具的操作參考。用它定位快取開關、網路請求紀錄及 HTTP 標頭。</p><p class="origin">Chrome for Developers · <time datetime="2026-11-17T15:24:57.010+08:00">2026-11-17 15:24</time>（臺灣時間）擷取 ·
+<p>Chrome 開發者工具的操作參考。用它定位快取開關、網路請求紀錄及 HTTP 標頭。</p><p class="origin">Chrome for Developers · <time datetime="2026-11-17T11:20:52.296+08:00">2026-11-17 11:20</time>（臺灣時間）擷取 ·
 <a href="https://developer.chrome.com/docs/devtools/network/reference/">原文 ↗</a></p>
 <div class="source-section" id="S05-preserve-log">
 <h4>Save requests across page loads</h4><p>打開 Preserve log，切換頁面時保留請求紀錄。</p><a href="https://developer.chrome.com/docs/devtools/network/reference/#preserve-log">查閱原文段落 ↗</a></div><div class="source-section" id="S05-disable-cache">

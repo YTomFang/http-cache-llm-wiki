@@ -1,0 +1,324 @@
+{
+  "sources": [
+    {
+      "id": "S01",
+      "title": "RFC 9111 · HTTP Caching",
+      "by": "IETF · RFC Editor",
+      "url": "https://www.rfc-editor.org/rfc/rfc9111.html",
+      "intro": "規範 HTTP 快取的儲存、重用、期限及驗證。以它確認規則與適用條件。",
+      "refs": [
+        [
+          "section-3",
+          "§3 Storing Responses in Caches",
+          "回應要符合儲存條件才可保留。儲存和之後是否能重用是兩個判斷。"
+        ],
+        [
+          "section-4.2",
+          "§4.2 Freshness",
+          "當 freshness lifetime 大於 current age，回應為 fresh。兩者相等時已達期限。"
+        ],
+        [
+          "section-4.3",
+          "§4.3 Validation",
+          "快取不能直接重用時，可利用條件式請求驗證已儲存的回應。"
+        ],
+        [
+          "section-5.2.2.1",
+          "§5.2.2.1 max-age",
+          "回應指令的秒數用來判斷 freshness lifetime。"
+        ],
+        [
+          "section-5.2.2.4",
+          "§5.2.2.4 no-cache",
+          "無參數的指令要求重用前向來源驗證並取得成功回應。"
+        ],
+        [
+          "section-5.2.2.5",
+          "§5.2.2.5 no-store",
+          "收到此回應指令的 HTTP 快取不得儲存這次回應。"
+        ]
+      ],
+      "excerpt": [
+        "section-4.2",
+        "response_is_fresh = (freshness_lifetime > current_age)"
+      ]
+    },
+    {
+      "id": "S02",
+      "title": "RFC 9110 · HTTP Semantics",
+      "by": "IETF · RFC Editor",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "intro": "定義 HTTP 驗證標記、條件式請求及狀態碼。用於查對欄位的方向與 304 的內容。",
+      "refs": [
+        [
+          "section-8.8.3",
+          "§8.8.3 ETag",
+          "ETag 是伺服器給資源回應的驗證標記。"
+        ],
+        [
+          "section-13.1.2",
+          "§13.1.2 If-None-Match",
+          "GET 帶有快取中的舊 ETag 時，伺服器比對目前版本。命中時回 304。"
+        ],
+        [
+          "section-15.4.5",
+          "§15.4.5 304 Not Modified",
+          "304 有回應標頭。資源內容由快取副本取得。"
+        ]
+      ],
+      "excerpt": [
+        "section-15.4.5",
+        "it cannot contain content or trailers"
+      ]
+    },
+    {
+      "id": "S03",
+      "title": "HTTP caching",
+      "by": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching",
+      "intro": "用實例解釋快取、期限和驗證，也提醒瀏覽器重新整理可能改變請求行為。",
+      "refs": [
+        [
+          "fresh_and_stale_based_on_age",
+          "Fresh and stale based on age",
+          "以已經過的時間解釋 fresh 和 stale。經過共享快取時，回應可能帶有 Age。"
+        ],
+        [
+          "validation",
+          "Validation",
+          "有驗證標記的舊副本仍可在驗證成功後使用。"
+        ],
+        [
+          "reload",
+          "Reload",
+          "按瀏覽器重新整理可能讓瀏覽器向伺服器要求驗證。"
+        ],
+        [
+          "force_reload",
+          "Force reload",
+          "強制重新整理可繞過現有快取。這和普通再次載入的情境不同。"
+        ]
+      ],
+      "excerpt": [
+        "validation",
+        "Stale responses are not immediately discarded."
+      ]
+    },
+    {
+      "id": "S04",
+      "title": "HTTP conditional requests",
+      "by": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Conditional_requests",
+      "intro": "以一連串請求展示首次取得資源、使用副本、驗證舊版與下載新版。",
+      "refs": [
+        [
+          "cache_update",
+          "Cache update",
+          "首次成功取得完整資源通常是 200。舊副本的標記相符則回 304，標記不符且請求成功則回 200 與新內容。"
+        ]
+      ],
+      "excerpt": [
+        "cache_update",
+        "there is a response/request round-trip"
+      ]
+    },
+    {
+      "id": "S05",
+      "title": "Network features reference",
+      "by": "Chrome for Developers",
+      "url": "https://developer.chrome.com/docs/devtools/network/reference/",
+      "intro": "Chrome 開發者工具的操作參考。用它定位快取開關、網路請求紀錄及 HTTP 標頭。",
+      "refs": [
+        [
+          "preserve-log",
+          "Save requests across page loads",
+          "打開 Preserve log，切換頁面時保留請求紀錄。"
+        ],
+        [
+          "disable-cache",
+          "Emulate a first-time visitor by disabling the browser cache",
+          "做快取觀察時保留正常快取行為，確認沒有勾選 Disable cache。"
+        ],
+        [
+          "headers",
+          "View HTTP headers",
+          "選取請求，在 Headers 查看狀態、Response Headers 與 Request Headers。"
+        ]
+      ],
+      "excerpt": [
+        "headers",
+        "Select a request under the Name column in the Requests table."
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "K01",
+      "title": "HTTP 快取與副本",
+      "question": "快取存了什麼，能省下什麼？",
+      "tags": "快取 副本 GET 200 HTTP 請求 回應 瀏覽器",
+      "related": [
+        "K02",
+        "K04"
+      ],
+      "claims": [
+        [
+          "copy",
+          "瀏覽器會向伺服器請求圖片等資源。在示例中，首次成功的 GET 得到 200 OK 與圖片內容。HTTP 快取可以保留符合儲存條件的回應，供後續請求重用。",
+          [
+            "S01#section-3",
+            "S04#cache_update"
+          ]
+        ],
+        [
+          "saving",
+          "本機快取直接重用副本時可省下網路往返和資源傳輸。驗證後重用仍有網路往返，可省下再次傳送內容。",
+          [
+            "S01#section-4.2",
+            "S04#cache_update"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "K02",
+      "title": "新鮮度與 max-age",
+      "question": "副本在什麼條件下可直接重用？",
+      "tags": "fresh stale 60 秒 max-age Age 重載 重新整理",
+      "related": [
+        "K01",
+        "K03",
+        "K04"
+      ],
+      "claims": [
+        [
+          "fresh",
+          "對符合重用條件的快取回應，current age 小於 freshness lifetime 時仍為 fresh，可直接使用。freshness lifetime 是回應仍有效的期限。",
+          [
+            "S01#section-4.2",
+            "S03#fresh_and_stale_based_on_age"
+          ]
+        ],
+        [
+          "example",
+          "在沒有額外重用限制的示例中，回應給 max-age=60。若回應初始 age 是 0，正常再次請求時，age 30 秒仍是 fresh，age 60 秒起已 stale。",
+          [
+            "S01#section-4.2",
+            "S01#section-5.2.2.1",
+            "S03#fresh_and_stale_based_on_age"
+          ]
+        ],
+        [
+          "reload",
+          "瀏覽器重新整理可能主動驗證。用正常再次請求來說明直接重用，避免把重新整理或強制重新整理當成同一種情境。",
+          [
+            "S03#reload",
+            "S03#force_reload"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "K03",
+      "title": "條件式請求與 304",
+      "question": "副本過期後，瀏覽器如何確認版本？",
+      "tags": "ETag If-None-Match 驗證 304 200 過期 GET status",
+      "related": [
+        "K02",
+        "K04",
+        "K05"
+      ],
+      "claims": [
+        [
+          "validator",
+          "若儲存的回應有 ETag，瀏覽器可以在需要驗證時，把舊標記放在 GET 的 If-None-Match 請求標頭。沒有 ETag，就沒有這個舊標記可帶。",
+          [
+            "S01#section-4.3",
+            "S02#section-8.8.3",
+            "S02#section-13.1.2"
+          ]
+        ],
+        [
+          "match",
+          "在本例的條件式 GET 中，舊標記與現行版本相符，伺服器回 304 Not Modified。304 有標頭、無回應內容，瀏覽器可重用舊副本。",
+          [
+            "S02#section-15.4.5",
+            "S04#cache_update"
+          ]
+        ],
+        [
+          "changed",
+          "同一條件式 GET 中，若舊標記已不相符且請求成功，伺服器回 200 OK 和新版內容。",
+          [
+            "S02#section-13.1.2",
+            "S04#cache_update"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "K04",
+      "title": "Cache-Control 指令比較",
+      "question": "可重用、先驗證、不可儲存有何差別？",
+      "tags": "Cache-Control max-age no-cache no-store 指令 儲存",
+      "related": [
+        "K01",
+        "K02",
+        "K03"
+      ],
+      "claims": [
+        [
+          "age",
+          "max-age=60 指定 60 秒的新鮮期限。在其他條件也符合時，新鮮的回應可直接重用。",
+          [
+            "S01#section-4.2",
+            "S01#section-5.2.2.1"
+          ]
+        ],
+        [
+          "validate",
+          "無參數的 no-cache 允許在其他儲存條件符合時保留副本，每次重用前都必須成功驗證。",
+          [
+            "S01#section-3",
+            "S01#section-5.2.2.4"
+          ]
+        ],
+        [
+          "no-store",
+          "在此課的單一指令情境下，no-store 禁止 HTTP 快取儲存這次回應。",
+          [
+            "S01#section-5.2.2.5"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "K05",
+      "title": "用 Chrome DevTools 檢查",
+      "question": "怎麼在瀏覽器找出快取的線索？",
+      "tags": "Network Chrome DevTools Headers Preserve log Disable cache 開發者 工具 實作",
+      "related": [
+        "K02",
+        "K03"
+      ],
+      "claims": [
+        [
+          "settings",
+          "先開 Chrome DevTools 的 Network，勾 Preserve log 保留跨頁面紀錄。觀察正常快取時，讓 Disable cache 維持未勾選。",
+          [
+            "S05#preserve-log",
+            "S05#disable-cache"
+          ]
+        ],
+        [
+          "inspect",
+          "選取同一個資源的請求，從 Headers 檢查狀態碼、Response Headers 的 Cache-Control／ETag，以及 Request Headers 是否帶 If-None-Match。",
+          [
+            "S05#headers",
+            "S02#section-13.1.2"
+          ]
+        ]
+      ]
+    }
+  ]
+}

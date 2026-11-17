@@ -1,0 +1,128 @@
+{
+  "started_utc": "2026-11-17T03:21:32+00:00",
+  "finished_utc": "2026-11-17T03:21:43+00:00",
+  "finished_taipei": "2026-11-17T11:21:43+08:00",
+  "os": "Windows",
+  "browser_channel": "chrome",
+  "chrome": "157.0.8103.79",
+  "local_links": 123,
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "slides": 8
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "slides": 8
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "slides": 8
+    },
+    {
+      "width": 320,
+      "height": 760,
+      "slides": 8
+    }
+  ],
+  "deck_controls": "pass",
+  "quizzes": "pass",
+  "wiki_search_and_links": "pass",
+  "screenshots": [
+    {
+      "file": "deck-1440-fresh.png",
+      "bytes": 87404,
+      "sha256": "4ade2afccff50a9302016e07ebce3f47025d286b18e7f6291d9201cf5e9b745f"
+    },
+    {
+      "file": "deck-1440-intro.png",
+      "bytes": 228587,
+      "sha256": "1be370011111f29db5e239dd983b1395fbb58c553ac5b32133ed80da90aab048"
+    },
+    {
+      "file": "deck-1440-quiz-feedback.png",
+      "bytes": 95011,
+      "sha256": "1eb7bb9e5975e603183f369cf103a4bf9ee341f27059ee91e4379c317f5fbac4"
+    },
+    {
+      "file": "deck-1440-quiz.png",
+      "bytes": 81965,
+      "sha256": "c130df14f885026c4f0b900c3e98dec01f642eb6be481033b2ca4682d38cc6c8"
+    },
+    {
+      "file": "deck-1440-validate.png",
+      "bytes": 87467,
+      "sha256": "036320f8435590452606ee408f1ae65225a1c72a36ed8891d8fcb48464e184da"
+    },
+    {
+      "file": "deck-390-validate.png",
+      "bytes": 61035,
+      "sha256": "dbb2e559458e365919f17c071b77eb60c6f7de5921e26e0e3a1e84932e7fbb7d"
+    },
+    {
+      "file": "report.png",
+      "bytes": 761464,
+      "sha256": "2a9f85f9a74d51169db22742b0e2758a6c6b4cdef5d56f69caf27a20428e10e9"
+    },
+    {
+      "file": "wiki-origin-link.png",
+      "bytes": 168048,
+      "sha256": "2fd636e4b1b8ed5f19adacf85881413281a53b22ae97dd3bbc2f84ef1799e625"
+    },
+    {
+      "file": "wiki.png",
+      "bytes": 149389,
+      "sha256": "f97f78f0346c11e8331ef1c384d2f1bc2c967518a784e990a868832eb7ff068b"
+    }
+  ],
+  "html_sha256": {
+    "index.html": "5ddd3e3b734653c5a25081bf35af431a86f894cd12a3658dfc4e0311f25ed484",
+    "wiki.html": "a5df2fb2655d8ccfbc6b2706ea3f7f6a8e243df8aeb44baaa2f515a3e6d9381c",
+    "slides.html": "15e820f960d43c7d047b5318f83d097d4f001db83d513187d41912c72358a9b8"
+  },
+  "cache_example": {
+    "max_age": 2,
+    "visits": [
+      {
+        "phase": "first",
+        "network": [
+          {
+            "if_none_match": null,
+            "etag": "\"poster-v1\"",
+            "status": 200,
+            "body_bytes": 69
+          }
+        ]
+      },
+      {
+        "phase": "fresh",
+        "network": []
+      },
+      {
+        "phase": "expired_same",
+        "network": [
+          {
+            "if_none_match": "\"poster-v1\"",
+            "etag": "\"poster-v1\"",
+            "status": 304,
+            "body_bytes": 0
+          }
+        ]
+      },
+      {
+        "phase": "expired_changed",
+        "network": [
+          {
+            "if_none_match": "\"poster-v1\"",
+            "etag": "\"poster-v2\"",
+            "status": 200,
+            "body_bytes": 69
+          }
+        ]
+      }
+    ]
+  }
+}

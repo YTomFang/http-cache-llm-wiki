@@ -1,0 +1,14 @@
+[
+  {
+    "slide": "fresh",
+    "evidence": "K02/reload",
+    "wiki_term": "正常再次請求",
+    "requirement": "第 3 頁把 30 秒重用限於正常再次請求，手動重新整理需視為不同情境。"
+  },
+  {
+    "slide": "validate",
+    "evidence": "K03/validator",
+    "wiki_term": "若儲存的回應有 ETag",
+    "requirement": "第 4 頁先設定快取副本含舊 ETag，再說明條件式 GET。"
+  }
+]

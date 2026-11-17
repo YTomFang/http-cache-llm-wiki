@@ -1,0 +1,53 @@
+{
+  "verified_utc": "2026-11-17T03:20:52+00:00",
+  "source_count": 5,
+  "concept_count": 5,
+  "evidence_count": 13,
+  "linked_sections": 16,
+  "slide_count": 8,
+  "slide_citations": 28,
+  "sources_used": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05"
+  ],
+  "outline_gate": [
+    {
+      "slide": "fresh",
+      "evidence": "K02/reload",
+      "wiki_term": "正常再次請求",
+      "requirement": "第 3 頁把 30 秒重用限於正常再次請求，手動重新整理需視為不同情境。"
+    },
+    {
+      "slide": "validate",
+      "evidence": "K03/validator",
+      "wiki_term": "若儲存的回應有 ETag",
+      "requirement": "第 4 頁先設定快取副本含舊 ETag，再說明條件式 GET。"
+    }
+  ],
+  "v0_findings": [
+    {
+      "slide": "fresh",
+      "page": 3,
+      "text": "第 30 秒重新整理頁面時，瀏覽器會直接重用海報。",
+      "evidence": "K02/reload",
+      "issue": "重新整理可能觸發驗證。直接重用的示例應限定為正常再次請求。",
+      "repair": "第 30 秒正常再次請求時，瀏覽器可直接重用海報。"
+    },
+    {
+      "slide": "validate",
+      "page": 4,
+      "text": "副本過期後，瀏覽器會送出帶有 If-None-Match 的 GET。",
+      "evidence": "K03/validator",
+      "issue": "此例應先交代快取副本附有 ETag，才有舊標記可帶入 If-None-Match。",
+      "repair": "若過期副本附有 ETag: \"poster-v1\"，瀏覽器可在條件式 GET 的 If-None-Match 帶上這個舊標記。"
+    }
+  ],
+  "v1_findings": [],
+  "changed_slides": [
+    "fresh",
+    "validate"
+  ]
+}

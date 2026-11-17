@@ -1,0 +1,134 @@
+[
+  {
+    "source": "S01",
+    "title": "RFC 9111 · HTTP Caching",
+    "publisher": "IETF · RFC Editor",
+    "request_url": "https://www.rfc-editor.org/rfc/rfc9111.html",
+    "final_url": "https://www.rfc-editor.org/rfc/rfc9111.html",
+    "status": 200,
+    "started_utc": "2026-11-17T03:20:48.459+00:00",
+    "received_utc": "2026-11-17T03:20:48.867+00:00",
+    "received_taipei": "2026-11-17T11:20:48.867+08:00",
+    "response_headers": {
+      "date": "Tue, 17 Nov 2026 03:20:48 GMT",
+      "etag": "W/\"67c426a73321f73db9ffdf2508376ec5\"",
+      "content-type": "text/html"
+    },
+    "bytes": 232630,
+    "sha256": "ce91ee9848d2b9ac46386b0f0cbd4bfd9c0cd1948ebc363834cadc7e0997f3d7",
+    "snapshot": "raw/captures/20261117T032048458817Z/S01.html.txt",
+    "rights": "https://www.rfc-editor.org/series/rfc-use/",
+    "sections": [
+      "section-3",
+      "section-4.2",
+      "section-4.3",
+      "section-5.2.2.1",
+      "section-5.2.2.4",
+      "section-5.2.2.5"
+    ]
+  },
+  {
+    "source": "S02",
+    "title": "RFC 9110 · HTTP Semantics",
+    "publisher": "IETF · RFC Editor",
+    "request_url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+    "final_url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+    "status": 200,
+    "started_utc": "2026-11-17T03:20:48.961+00:00",
+    "received_utc": "2026-11-17T03:20:49.312+00:00",
+    "received_taipei": "2026-11-17T11:20:49.312+08:00",
+    "response_headers": {
+      "date": "Tue, 17 Nov 2026 03:20:48 GMT",
+      "etag": "W/\"0d9f5fb8eb38d3c08b055f9b0671d68b\"",
+      "content-type": "text/html"
+    },
+    "bytes": 1187554,
+    "sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+    "snapshot": "raw/captures/20261117T032048458817Z/S02.html.txt",
+    "rights": "https://www.rfc-editor.org/series/rfc-use/",
+    "sections": [
+      "section-8.8.3",
+      "section-13.1.2",
+      "section-15.4.5"
+    ]
+  },
+  {
+    "source": "S03",
+    "title": "HTTP caching",
+    "publisher": "MDN Web Docs",
+    "request_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching",
+    "final_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching",
+    "status": 200,
+    "started_utc": "2026-11-17T03:20:49.802+00:00",
+    "received_utc": "2026-11-17T03:20:50.037+00:00",
+    "received_taipei": "2026-11-17T11:20:50.037+08:00",
+    "response_headers": {
+      "date": "Tue, 17 Nov 2026 03:20:49 GMT",
+      "last-modified": "Tue, 17 Nov 2026 00:49:11 GMT",
+      "etag": "\"7329cf3cd4e27fa4d2c8be34d8f82b80\"",
+      "content-type": "text/html",
+      "content-length": "260711"
+    },
+    "bytes": 260711,
+    "sha256": "08bc61b83a1bd3805b5686ea4fd28e67249d23bfbb2bb34811a7096c135c3948",
+    "snapshot": "raw/captures/20261117T032048458817Z/S03.html.txt",
+    "rights": "https://developer.mozilla.org/en-US/docs/MDN/Writing_guidelines/Attrib_copyright_license",
+    "sections": [
+      "fresh_and_stale_based_on_age",
+      "validation",
+      "reload",
+      "force_reload"
+    ]
+  },
+  {
+    "source": "S04",
+    "title": "HTTP conditional requests",
+    "publisher": "MDN Web Docs",
+    "request_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Conditional_requests",
+    "final_url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Conditional_requests",
+    "status": 200,
+    "started_utc": "2026-11-17T03:20:50.110+00:00",
+    "received_utc": "2026-11-17T03:20:51.264+00:00",
+    "received_taipei": "2026-11-17T11:20:51.264+08:00",
+    "response_headers": {
+      "date": "Tue, 17 Nov 2026 03:20:50 GMT",
+      "last-modified": "Tue, 17 Nov 2026 00:49:11 GMT",
+      "etag": "\"9ee91868f0dcc63f81e42e1a651a9f8b\"",
+      "content-type": "text/html",
+      "content-length": "227304"
+    },
+    "bytes": 227304,
+    "sha256": "997fb38c155c1e930913822f1d01c8c4174b850cdaa754a6351379879304a6eb",
+    "snapshot": "raw/captures/20261117T032048458817Z/S04.html.txt",
+    "rights": "https://developer.mozilla.org/en-US/docs/MDN/Writing_guidelines/Attrib_copyright_license",
+    "sections": [
+      "cache_update"
+    ]
+  },
+  {
+    "source": "S05",
+    "title": "Network features reference",
+    "publisher": "Chrome for Developers",
+    "request_url": "https://developer.chrome.com/docs/devtools/network/reference/",
+    "final_url": "https://developer.chrome.com/docs/devtools/network/reference/",
+    "status": 200,
+    "started_utc": "2026-11-17T03:20:51.346+00:00",
+    "received_utc": "2026-11-17T03:20:52.296+00:00",
+    "received_taipei": "2026-11-17T11:20:52.296+08:00",
+    "response_headers": {
+      "date": "Tue, 17 Nov 2026 03:20:51 GMT",
+      "last-modified": "Tue, 16 Jul 2024 07:00:00 GMT",
+      "content-type": "text/html; charset=utf-8",
+      "content-length": "327431"
+    },
+    "bytes": 327431,
+    "sha256": "ddce62744d5278548761fc972eb4b681d6bcb348b216d639d260babe9564b458",
+    "snapshot": "raw/captures/20261117T032048458817Z/S05.html.txt",
+    "rights": "https://developers.google.com/terms/site-policies",
+    "sections": [
+      "preserve-log",
+      "disable-cache",
+      "headers"
+    ]
+  }
+]

@@ -1,0 +1,221 @@
+[
+  {
+    "id": "intro",
+    "tag": "瀏覽器基礎",
+    "title": "HTTP 快取入門",
+    "lead": "同一張社團海報看三次，瀏覽器何時能直接用舊副本，何時要向伺服器確認？",
+    "citations": [
+      "K01/copy",
+      "K02/fresh",
+      "K03/validator"
+    ],
+    "items": [
+      [
+        "重用",
+        "直接讀本機副本"
+      ],
+      [
+        "驗證",
+        "詢問手上的版本還能不能用"
+      ],
+      [
+        "下載",
+        "收到新版資源內容"
+      ]
+    ]
+  },
+  {
+    "id": "copy",
+    "tag": "快取與副本",
+    "title": "把回應留在瀏覽器",
+    "lead": "第一次開社團網站，瀏覽器向伺服器請求海報。請求成功後，快取可以留下符合條件的回應。",
+    "citations": [
+      "K01/copy",
+      "K01/saving"
+    ],
+    "items": [
+      [
+        "瀏覽器 → 伺服器",
+        "GET /poster.png",
+        "請求資源"
+      ],
+      [
+        "伺服器 → 瀏覽器",
+        "200 OK + 海報圖片",
+        "回應資料"
+      ],
+      [
+        "瀏覽器",
+        "快取保存副本",
+        "下次可再利用"
+      ]
+    ],
+    "note": "能直接用副本時，瀏覽器可以省下這張圖片的網路往返和傳輸。"
+  },
+  {
+    "id": "fresh",
+    "tag": "新鮮度",
+    "title": "副本有一段有效期限",
+    "lead": "海報回應帶有 Cache-Control: max-age=60。假設初始 age 為 0，且沒有額外的重用限制。",
+    "citations": [
+      "K02/fresh",
+      "K02/example",
+      "K02/reload"
+    ],
+    "items": [
+      [
+        "0 秒",
+        "收到海報",
+        "開始計算回應年齡"
+      ],
+      [
+        "30 秒",
+        "仍然 fresh",
+        "第 30 秒正常再次請求時，瀏覽器可直接重用海報。"
+      ],
+      [
+        "60 秒起",
+        "已達期限",
+        "副本變成 stale，下一頁看如何驗證。"
+      ]
+    ]
+  },
+  {
+    "id": "validate",
+    "tag": "條件式請求",
+    "title": "到期後，先確認版本",
+    "lead": "若過期副本附有 ETag: \"poster-v1\"，瀏覽器可在條件式 GET 的 If-None-Match 帶上這個舊標記。",
+    "citations": [
+      "K03/validator",
+      "K03/match",
+      "K03/changed"
+    ],
+    "code": "GET /poster.png\nIf-None-Match: \"poster-v1\"",
+    "items": [
+      [
+        "標記相符",
+        "304 Not Modified",
+        "回應有標頭、無圖片內容。瀏覽器使用舊副本。"
+      ],
+      [
+        "標記不同",
+        "200 OK + 新海報",
+        "請求成功時，伺服器傳回新版圖片。"
+      ]
+    ]
+  },
+  {
+    "id": "policy",
+    "tag": "快取指令",
+    "title": "三種 Cache-Control 指令",
+    "lead": "看的是伺服器回應標頭。先區分「可否儲存」與「何時能重用」。",
+    "citations": [
+      "K04/age",
+      "K04/validate",
+      "K04/no-store"
+    ],
+    "items": [
+      [
+        "max-age=60",
+        "符合條件可存",
+        "新鮮期限為 60 秒。符合重用條件時可直接使用。"
+      ],
+      [
+        "no-cache",
+        "符合條件可存",
+        "每次重用前都要成功驗證。"
+      ],
+      [
+        "no-store",
+        "不得儲存",
+        "此單一指令情境下，HTTP 快取不得保留這次回應。"
+      ]
+    ]
+  },
+  {
+    "id": "lab",
+    "tag": "動手觀察",
+    "title": "在 Network 找到快取線索",
+    "lead": "在 Chrome 開發者工具觀察同一個圖片網址。選一張帶快取標頭的圖片，從不同頁面再次載入。",
+    "citations": [
+      "K05/settings",
+      "K05/inspect",
+      "K02/reload",
+      "K03/match"
+    ],
+    "items": [
+      [
+        "記住請求",
+        "勾選 Preserve log。觀察正常快取時，讓 Disable cache 維持未勾選。"
+      ],
+      [
+        "打開 Headers",
+        "在 Response Headers 找 Cache-Control 和 ETag，再到 Request Headers 找 If-None-Match。"
+      ],
+      [
+        "讀結果",
+        "看到 304 代表這次有網路驗證，瀏覽器可沿用舊副本。"
+      ]
+    ]
+  },
+  {
+    "id": "quiz",
+    "tag": "自我檢查",
+    "title": "你會怎麼判斷？",
+    "lead": "假設海報副本已過期，且帶有 ETag。試著預測瀏覽器的行為。",
+    "citations": [
+      "K03/validator",
+      "K03/match",
+      "K04/validate",
+      "K04/no-store"
+    ],
+    "quizzes": [
+      {
+        "prompt": "條件式 GET 驗證時，舊 ETag 與目前版本相符。會收到什麼？",
+        "choices": [
+          "304，沿用舊副本",
+          "200，附新版圖片"
+        ],
+        "answer": 0,
+        "explanation": "304 有回應標頭，圖片內容來自舊副本。"
+      },
+      {
+        "prompt": "可以保留副本，但重用前要驗證。是哪個回應指令？",
+        "choices": [
+          "no-store",
+          "no-cache"
+        ],
+        "answer": 1,
+        "explanation": "no-cache 要求成功驗證後才重用。no-store 管的是儲存。"
+      }
+    ]
+  },
+  {
+    "id": "takeaway",
+    "tag": "回顧",
+    "title": "再請求時，問這三件事",
+    "lead": "下次在 Network 看到快取相關的回應，可以用這三個問題判讀。",
+    "citations": [
+      "K01/copy",
+      "K02/fresh",
+      "K03/validator",
+      "K03/match",
+      "K03/changed",
+      "K04/no-store"
+    ],
+    "items": [
+      [
+        "有符合儲存條件的副本嗎？",
+        "沒有可用副本時，通常要請求完整資源。"
+      ],
+      [
+        "可以直接重用嗎？",
+        "可用且仍新鮮的副本可直接使用。"
+      ],
+      [
+        "需要驗證嗎？",
+        "有 ETag 時可送條件式 GET。標記相符回 304，標記不同且成功取得資源時回 200 和新內容。"
+      ]
+    ]
+  }
+]

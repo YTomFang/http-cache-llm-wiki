@@ -150,8 +150,8 @@ td:first-child{font-weight:700;color:var(--paper-ink)}
 
 <section class="report-card" id="trace">
 <h2>一次實跑的檢查紀錄</h2>
-<p class="caption">此次重跑最後一篇來源的收件時間為 <time datetime="2026-11-17T15:24:57.010+08:00">2026-11-17T15:24:57.010+08:00</time>（臺灣時間），即 <time datetime="2026-11-17T07:24:57.010+00:00">2026-11-17T07:24:57.010+00:00</time>（UTC）。</p>
-<p>初版 Chrome 紀錄的臺灣時間是 11 月 17 日 02:59:53，換算 UTC 是 11 月 16 日 18:59:53。初版來源日期曾由程式固定填入，本次改由程式在收到每個 HTTP 回應時記時，並重算完整快照的指紋。Chrome 也已重跑並使用此次實測紀錄。</p>
+<p class="caption">此次重跑最後一篇來源的收件時間為 <time datetime="2026-11-17T11:20:52.296+08:00">2026-11-17T11:20:52.296+08:00</time>（臺灣時間），即 <time datetime="2026-11-17T03:20:52.296+00:00">2026-11-17T03:20:52.296+00:00</time>（UTC）。</p>
+<p>先前公開版的執行時間晚於核對時刻，該次時間紀錄已撤回。這次重跑前後都比對 GitHub 和 Cloudflare 的即時回應標頭與主機時鐘。擷取程式在收到每一份完整回應時記時，Chrome 也重新執行並記錄完成時間。</p>
 <div class="table-wrap">
 <table>
 <thead><tr><th scope="col">節點</th><th scope="col">實際檢查</th><th scope="col">處理及結果</th></tr></thead>
@@ -175,13 +175,22 @@ td:first-child{font-weight:700;color:var(--paper-ink)}
 <li><a href="evidence/deck-1440-quiz-feedback.png">互動測驗｜兩題答對後的回饋</a></li>
 <li><a href="evidence/wiki-origin-link.png">Wiki｜從概念跳到 Chrome 原文段落的定位</a></li>
 </ul>
+<details><summary>查看其餘 5 張截圖（共 9 張公開）</summary>
+<ul>
+<li><a href="evidence/deck-1440-intro.png">簡報封面</a></li>
+<li><a href="evidence/deck-1440-fresh.png">快取新鮮期限</a></li>
+<li><a href="evidence/deck-1440-quiz.png">作答前的測驗</a></li>
+<li><a href="evidence/wiki.png">Wiki 首頁</a></li>
+<li><a href="evidence/report.png">成果總覽</a></li>
+</ul>
+</details>
 <h3>如何追到原文</h3>
 <ul>
 <li><a href="slides.html#fresh">第 3 頁｜副本有效期限</a> → <a href="wiki.html#K02-example">K02 的 60 秒示例</a> → <a href="wiki.html#S01-section-4.2">S01 · RFC 9111 §4.2</a></li>
 <li><a href="slides.html#validate">第 4 頁｜版本驗證</a> → <a href="wiki.html#K03-match">K03 的 304</a> → <a href="wiki.html#S02-section-15.4.5">S02 · RFC 9110 §15.4.5</a></li>
 <li><a href="slides.html#lab">第 6 頁｜Chrome 實作</a> → <a href="wiki.html#K05-inspect">K05 的 Headers</a> → <a href="wiki.html#S05-headers">S05 · Chrome 官方說明</a></li>
 </ul>
-<p>ZIP 內的 <code>workflow/</code> 保存查詢結果、兩版逐頁稿、檢查腳本與 JSON 紀錄。</p>
+<p>公開流程資料夾可查閱時間比對、查詢結果、兩版逐頁稿、檢查腳本與瀏覽器 JSON 紀錄。完整來源 HTML 快照收在作業 ZIP。<a href="https://github.com/YTomFang/http-cache-llm-wiki/tree/main/workflow">公開 workflow 紀錄</a></p>
 </section>
 
 <section class="report-card" id="reflection">
